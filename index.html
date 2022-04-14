@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Projet JS
+  </title>
+</head>
+
+<body>
+  <ul id="entities"></ul>
+  <script>
+
+    (async () => {
+      function createNode(element) {
+        return document.createElement(element);
+      }
+
+      function append(parent, el) {
+        return parent.appendChild(el);
+      }
+
+      async function dataFetching(url) {
+        const raw = await fetch(url);
+        const { assets } = await raw.json();
+        return assets;
+      }
+      const ul = document.getElementById('entities');
+      try {
+        const assets = await dataFetching("https://awesome-nft-app.herokuapp.com/")
+        console.log(assets);
+        assets.map(({ name }) => {
+          let li = createNode('li');
+          li.innerHTML = name;
+          append(ul, li);
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+
+  </script>
+</body>
+
+
+</html>
