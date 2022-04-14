@@ -125,9 +125,3 @@ function changeColor(){
     heart.addClass("intro");
   });
 }
-
-$(function() {
-  $( "a" ).click(function() {
-    $( "a" ).toggleClass( "press", 1000 );
-  });
-});
