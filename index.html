@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     Projet JS
@@ -10,44 +11,59 @@
 </head>
 
 <body>
-  <ul id="entities"></ul>
   <script>
+    const root = document.querySelector('body');
+    function createElement(tag, config, parent = null) {
+      const { text, imgsrc, myclass, color, myid } = config || {};
 
-    (async () => {
-      const root = document.querySelector('body');
-      function createElement(tag, config, parent = null) {
-        const { text, color } = config || {};
+      const element = document.createElement(tag);
 
-        const element = document.createElement(tag);
-
-        if (color) {
-          element.style.color = color;
-        }
-
-        if (text) {
-          element.innerHTML = text;
-        }
-        if (!parent) {
-          root.appendChild(element);
-        } else {
-          parent.appendChild(element);
-        }
-        return element;
+      if (color) {
+        element.style.color = color;
       }
 
+      if (imgsrc) {
+        element.setAttribute('src', imgsrc);
+      }
+
+      if (myclass) {
+        element.setAttribute('class', myclass);
+      }
+
+      if (myid) {
+        element.setAttribute('id', myid);
+      }
+
+      if (text) {
+        element.innerHTML = text;
+      }
+      if (!parent) {
+        root.appendChild(element);
+      } else {
+        parent.appendChild(element);
+      }
+      return element;
+    }
+    createElement('h1', { text: "Bienvenu sur le site des NFT", myclass: 'name' }, root);
+
+    (async () => {
       async function dataFetching(url) {
         const raw = await fetch(url);
         const { assets } = await raw.json();
         return assets;
       }
-      const ul = document.getElementById('entities');
+      createElement('div', { myclass: 'allentities' }, root);
+      const allentities = document.getElementsByClassName('allentities')[0];
+      let n = 0;
       try {
         const assets = await dataFetching("https://awesome-nft-app.herokuapp.com/")
-        console.log(assets);
-        assets.map(({ name, description }) => {
-          createElement('li', { text: name, color: 'red' }, ul);
-          if (description) {
-            createElement('li', { text: description, color: 'black' }, ul);
+        assets.map(({ name, image_url }) => {
+          createElement('div', { myclass: 'entitie' }, allentities);
+          const div = document.getElementsByClassName('entitie')[n];
+          n++;
+          createElement('h2', { text: name, color: 'red', myclass: 'name' }, div);
+          if (image_url) {
+            createElement('img', { imgsrc: image_url, myclass: 'image' }, div);
           }
         })
       } catch (error) {

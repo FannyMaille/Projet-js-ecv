@@ -1,0 +1,12 @@
+.allentities{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.entitie{
+  width: calc(100% / 3);
+}
+
+.image{
+  width: calc(100% / 2);
+}
