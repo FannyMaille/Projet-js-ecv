@@ -44,12 +44,14 @@
       try {
         const assets = await dataFetching("https://awesome-nft-app.herokuapp.com/")
         console.log(assets);
+
         assets.map(({ name, description }) => {
           createElement('li', { text: name, color: 'red' }, ul);
           if (description) {
             createElement('li', { text: description, color: 'black' }, ul);
           }
         })
+
       } catch (error) {
         console.log(error);
       }
