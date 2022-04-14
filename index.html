@@ -14,12 +14,25 @@
   <script>
 
     (async () => {
-      function createNode(element) {
-        return document.createElement(element);
-      }
+      const root = document.querySelector('body');
+      function createElement(tag, config, parent = null) {
+        const { text, color } = config || {};
 
-      function append(parent, el) {
-        return parent.appendChild(el);
+        const element = document.createElement(tag);
+
+        if (color) {
+          element.style.color = color;
+        }
+
+        if (text) {
+          element.innerHTML = text;
+        }
+        if (!parent) {
+          root.appendChild(element);
+        } else {
+          parent.appendChild(element);
+        }
+        return element;
       }
 
       async function dataFetching(url) {
@@ -31,10 +44,11 @@
       try {
         const assets = await dataFetching("https://awesome-nft-app.herokuapp.com/")
         console.log(assets);
-        assets.map(({ name }) => {
-          let li = createNode('li');
-          li.innerHTML = name;
-          append(ul, li);
+        assets.map(({ name, description }) => {
+          createElement('li', { text: name, color: 'red' }, ul);
+          if (description) {
+            createElement('li', { text: description, color: 'black' }, ul);
+          }
         })
       } catch (error) {
         console.log(error);
