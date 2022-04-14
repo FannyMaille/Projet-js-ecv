@@ -1,50 +1,35 @@
+.title{
+  text-align: center;
+  margin: 50px 0;
+}
+
 .allentities {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 50px 25px;
 }
 
-.entitie {
-  width: calc(100% / 3);
+.titlenft {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.namenft {
+  font-size: 21px;
+  margin-bottom: 0;
 }
 
 .image {
-  width: 80%;
+  width: 415px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
-
-/* .favorite {
-  cursor: pointer;
-  padding: 10px 12px 8px;
-  background: #fff;
-  border-radius: 50%;
-  display: inline-block;
-  margin: 0 0 15px;
-  color: #aaa;
-  transition: 0.2s;
-}
-
-.favorite:hover {
-  color: #666;
-}
-
-.favorite:before {
-  font-family: fontawesome;
-  content: "\f004";
-  font-style: normal;
-}
-
-.favorite.press {
-  animation: size 0.4s;
-  color: #e23b3b;
-} */
 
 .favorite {
-  background-color: grey;
+  cursor: pointer;
   display: inline-block;
   height: 10px;
   margin: 0 10px;
@@ -57,7 +42,6 @@
 .favorite:before,
 .favorite:after {
   content: "";
-  background-color: grey;
   border-radius: 50%;
   height: 10px;
   position: absolute;
@@ -72,4 +56,20 @@
 .favorite:after {
   left: 5px;
   top: 0;
+}
+
+.favoriteadd,
+.favoriteadd:before,
+.favoriteadd:after {
+  background-color: red;
+}
+
+.favoriteremove,
+.favoriteremove:before,
+.favoriteremove:after {
+  background-color: #627264;
+}
+
+.btn-main{
+  background-color:#A1CDA8;
 }
