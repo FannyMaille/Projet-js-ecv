@@ -3,58 +3,49 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="index.js" type="text/javascript"></script>
+
   <title>
     Projet JS
   </title>
 </head>
 
 <body>
-  <ul id="entities"></ul>
   <script>
+    const root = document.querySelector('body');
+    createElement('h1', { text: "Bienvenu sur le site des NFT", myclass: 'name' }, root);
 
     (async () => {
-      const root = document.querySelector('body');
-      function createElement(tag, config, parent = null) {
-        const { text, color } = config || {};
-
-        const element = document.createElement(tag);
-
-        if (color) {
-          element.style.color = color;
-        }
-
-        if (text) {
-          element.innerHTML = text;
-        }
-        if (!parent) {
-          root.appendChild(element);
-        } else {
-          parent.appendChild(element);
-        }
-        return element;
-      }
-
       async function dataFetching(url) {
         const raw = await fetch(url);
         const { assets } = await raw.json();
         return assets;
       }
-      const ul = document.getElementById('entities');
+      createElement('div', { myclass: 'allentities' }, root);
+      const allentities = document.getElementsByClassName('allentities')[0];
+      let n = 0;
       try {
         const assets = await dataFetching("https://awesome-nft-app.herokuapp.com/")
-        console.log(assets);
-
-        assets.map(({ name, description }) => {
-          createElement('li', { text: name, color: 'red' }, ul);
-          if (description) {
-            createElement('li', { text: description, color: 'black' }, ul);
+        assets.map(({ name, image_url, id }) => {
+          createElement('div', { myclass: 'entitie' }, allentities);
+          const div = document.getElementsByClassName('entitie')[n];
+          n++;
+          createElement('h2', { text: name, color: 'red', myclass: 'name' }, div);
+          createElement('a', { myclass: 'favorite' }, div);
+          if (image_url) {
+            createElement('img', { imgsrc: image_url, myclass: 'image' }, div);
           }
+          createElement('button', { text: "Voir la fiche détails", myonclick: `window.location.href='product.html?id=${id}'`, myclass: 'button' }, div);
         })
 
       } catch (error) {
         console.log(error);
       }
+      const datasLoadedEvent = new Event('datasLoaded')
+      document.dispatchEvent(datasLoadedEvent)
     })();
 
   </script>
