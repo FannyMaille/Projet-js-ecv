@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="index.js" type="text/javascript"></script>
+
   <title>
     Projet JS
   </title>
@@ -31,7 +34,7 @@
       try {
         const assets = await dataFetching("https://awesome-nft-app.herokuapp.com/")
         console.log(assets);
-        assets.map(({ name }) => {
+        assets.map(({ id, name }) => {
           let li = createNode('li');
           li.innerHTML = name;
           append(ul, li);
@@ -39,6 +42,8 @@
       } catch (error) {
         console.log(error);
       }
+      const datasLoadedEvent = new Event('datasLoaded')
+      document.dispatchEvent(datasLoadedEvent)
     })();
 
   </script>
