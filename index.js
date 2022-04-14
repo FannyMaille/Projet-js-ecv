@@ -82,3 +82,52 @@ const initApp = () => {
 document.addEventListener('datasLoaded', () => {
     initApp();
 })
+
+function createElement(tag, config, parent = null) {
+  const { text, imgsrc, myclass, color, myid, myonclick } = config || {};
+
+  const element = document.createElement(tag);
+
+  if (color) {
+    element.style.color = color;
+  }
+
+  if (imgsrc) {
+    element.setAttribute('src', imgsrc);
+  }
+
+  if (myclass) {
+    element.setAttribute('class', myclass);
+  }
+
+  if (myid) {
+    element.setAttribute('id', myid);
+  }
+
+  if (myonclick) {
+    element.setAttribute('onclick', myonclick);
+  }
+
+  if (text) {
+    element.innerHTML = text;
+  }
+  if (!parent) {
+    root.appendChild(element);
+  } else {
+    parent.appendChild(element);
+  }
+  return element;
+}
+
+function changeColor(){
+  const heart = document.getElementsByClassName('favorite');
+  heart.addEventListener("onclick", function () {
+    heart.addClass("intro");
+  });
+}
+
+$(function() {
+  $( "a" ).click(function() {
+    $( "a" ).toggleClass( "press", 1000 );
+  });
+});
