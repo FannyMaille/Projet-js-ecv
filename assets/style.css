@@ -13,6 +13,7 @@ h1, h2, h3, h4, h5 {
 
 h2 {
 	margin: 0;
+	font-style: italic;
 }
 
 .product_essential {
@@ -60,8 +61,9 @@ h2 {
 
 .product_information_child {
 	width: 50%;
-	padding: 20px;
+	padding: 20px 20px 0px 20px;
 	display: flex;
+	margin: 0px 20px;
 	flex-direction: column;
 	justify-content: space-between;
 }
@@ -70,14 +72,19 @@ h2 {
 	background-color: #A1CDA8;
 	text-align: right;
 	padding: 20px;
-	margin-bottom: O !important;
+	margin-bottom: 0;
 }
 
 .bg_grey {
 	background-color: #ECECEC;
+	border-bottom: solid 10px #A1CDA8;
 }
 
 .date {
 	text-align: right;
 	margin-top: 50px;
+}
+
+.navigation {
+	background-color: red;
 }
