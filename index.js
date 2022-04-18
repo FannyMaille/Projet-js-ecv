@@ -1,5 +1,5 @@
-import {route} from "./routing.js"
-import createElement from "./createElement.js"
+import { route, router } from "./routing.js";
+import createElement from "./createElement.js";
 
 /**
  * Fonctionnalités des favoris :
@@ -99,9 +99,12 @@ document.addEventListener("datasLoaded", () => {
   initApp();
 });
 
+window.addEventListener("load", (e) => {
+  // Router
+  // Define the mappings route->template.
+  route("/", "home");
+  route(`/product/`, "product");
 
-// Router
-// Define the mappings route->template.
-route("/", "home");
-
-route(`/product/${window.location.hash.slice(10)}`, "product");
+  window.addEventListener("hashchange", router);
+  router(e);
+});

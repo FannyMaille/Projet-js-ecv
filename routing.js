@@ -7,6 +7,7 @@ let templates = {};
 
 // Register a template (this is to mimic a template engine)
 function template(name, templateFunction) {
+  console.log("recall template builder");
   return (templates[name] = templateFunction);
 }
 
@@ -14,6 +15,7 @@ function template(name, templateFunction) {
 // when entering that path. A template can be a string (file name), or a function that
 // will directly create the DOM objects.
 function route(path, template) {
+  console.log("recall route");
   if (typeof template === "function") {
     return (routes[path] = template);
   } else if (typeof template === "string") {
@@ -138,10 +140,10 @@ template("home", () => {
         createElement("div", { myclass: "card-footer" }, cardHeader);
         const cardFooter = document.getElementsByClassName("card-footer")[n];
         createElement(
-          "button",
+          "a",
           {
             text: "Voir la fiche détails",
-            myonclick: `window.location.href='#/product/${id}'`,
+            myhref: `#/product/${id}`,
             myclass: "btn",
             color: "#627264",
             bgcolor: "#A1CDA8",
@@ -364,15 +366,19 @@ function resolveRoute(route) {
 
 // The actual router, get the current URL and generate the corresponding template
 function router(evt) {
-  console.log(window.location.hash.slice(10));
-  let url = window.location.hash.slice(1) || "/";
-  let resolvedRoute = resolveRoute(url);
-  console.log(url);
-  console.log(resolvedRoute);
-  resolvedRoute();
+  const root = document.querySelector("body");
+  root.innerHTML = "";
+  try {
+    // console.log(window.location.hash.slice(10));
+    let url = window.location.hash.slice(1) || "/";
+    console.log({ url, routes, templates });
+    const resolvedRoute = resolveRoute(
+      url.includes("/product/") ? "/product/" : url
+    );
+    resolvedRoute && resolvedRoute();
+  } catch (error) {
+    console.warn(error);
+  }
 }
 
-window.addEventListener("load", router);
-window.addEventListener("hashchange", router);
-
-export { route };
+export { route, router };
