@@ -101,5 +101,6 @@ document.addEventListener("datasLoaded", () => {
 
 
 // Router
+// Define the mappings route->template.
 route("/", "home");
-route("/product", "product");
+route(`/product/${window.location.search.slice(4)}`, "product");
