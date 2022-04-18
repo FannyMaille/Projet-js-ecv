@@ -160,14 +160,14 @@ template("home", () => {
 });
 
 template("product", () => {
+  console.log("coucou product");
   (async () => {
-    console.log("coucou product");
     const root = document.querySelector("body");
     createElement(
       "button",
       {
         text: "Retour",
-        myonclick: `window.location.href='#/'`,
+        myonclick: `window.location.href='/'`,
         myclass: "btn ml-2 mt-2",
         color: "#627264",
         bgcolor: "#A1CDA8",
@@ -175,7 +175,7 @@ template("product", () => {
       },
       root
     );
-    const id_nft = window.location.search.slice(4);
+    const id_nft = window.location.hash.slice(10);
 
     async function dataFetchingSingle(url) {
       const raw = await fetch(url);
@@ -364,10 +364,12 @@ function resolveRoute(route) {
 
 // The actual router, get the current URL and generate the corresponding template
 function router(evt) {
+  console.log(window.location.hash.slice(10));
   let url = window.location.hash.slice(1) || "/";
-  let route = resolveRoute(url);
-
-  route();
+  let resolvedRoute = resolveRoute(url);
+  console.log(url);
+  console.log(resolvedRoute);
+  resolvedRoute();
 }
 
 window.addEventListener("load", router);
