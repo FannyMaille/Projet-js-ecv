@@ -1,89 +1,92 @@
 /* Page détail produit */
 .container {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	padding: 5% 15%;
-
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5% 15%;
 }
 
-h1, h2, h3, h4, h5 {
-	color: #627264;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #627264;
 }
 
 h2 {
-	margin: 0;
+  margin: 0;
 }
 
 .product_essential {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .hr-horizontal {
-	color: black;
-    height: 2px;
-    background-color: black;
-    border: none;
-	margin-top: 20px;
-	margin-bottom: 20px;
+  color: black;
+  height: 2px;
+  background-color: black;
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .w-60 {
-	width: 60%;
+  width: 60%;
 }
 
 .w-100 {
-	width: 100%;
+  width: 100%;
 }
 
 .ml-0 {
-	margin-left: 0;
+  margin-left: 0;
 }
 
 .center {
-	margin-right: auto;
-	margin-left: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .img-product {
-	width: 45%;
-	margin: auto;
+  width: 45%;
+  margin: auto;
 }
 
 .product_information {
-	display: flex;
-	flex-direction: row;
-	margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
 }
 
 .product_information_child {
-	width: 50%;
-	padding: 20px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+  width: 50%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .creator {
-	background-color: #A1CDA8;
-	text-align: right;
-	padding: 20px;
-	margin-bottom: O !important;
+  background-color: #a1cda8;
+  text-align: right;
+  padding: 20px;
+  margin-bottom: O !important;
 }
 
 .bg_grey {
-	background-color: #ECECEC;
+  background-color: #ececec;
 }
 
 .date {
-	text-align: right;
-	margin-top: 50px;
+  text-align: right;
+  margin-top: 50px;
 }
 
 /* Main page */
-.title{
+.title {
   text-align: center;
   margin: 50px 0;
 }
@@ -105,6 +108,8 @@ h2 {
 .namenft {
   font-size: 21px;
   margin-bottom: 0;
+  width: 300px;
+  word-wrap: break-word;
 }
 
 .image {
