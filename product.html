@@ -21,49 +21,9 @@
 
 			const id_nft = window.location.search.slice(4);
 
-			function createElement(tag, config, parent = null) {
-
-				const { text, color, myclass, imgsrc, myid } = config || {};
-
-				const element = document.createElement(tag);
-
-				if (color) {
-					element.style.color = color;
-				}
-
-				if (text) {
-					element.innerHTML = text;
-				}
-				if (myclass) {
-					if (Array.isArray(myclass)) {
-						element.classList.add(...myclass);
-					} else {
-						element.classList.add(myclass);
-					}
-				}
-				if (imgsrc) {
-					element.src = imgsrc;
-				}
-				if (myid) {
-					element.id = myid;
-				}
-				if (!parent) {
-					root.appendChild(element);
-				} else {
-					parent.appendChild(element);
-				}
-				return element;
-			}
-
 			async function dataFetchingSingle(url) {
 				const raw = await fetch(url);
 				return await raw.json();
-			}
-
-			async function dataFetching(url) {
-				const raw = await fetch(url);
-				const { assets } = await raw.json();
-				return assets;
 			}
 			//création des divs
 					createElement('div', { myid: 'navigation', myclass: 'navigation' }, root);
@@ -71,7 +31,7 @@
 					createElement('div', { myid: 'product_essential', myclass: 'product_essential' }, root);
 					createElement('div', { myid: 'product_information', myclass: 'product_information' }, root);
 					createElement('div', { myid: 'product_information_left', myclass: 'product_information_child' }, root);
-					createElement('div', { myid: 'product_information_right', myclass: ['product_information_child', 'bg_grey'] }, root);
+					createElement('div', { myid: 'product_information_right', myclass: 'product_information_child bg_grey' }, root);
 
 			try {
 
@@ -80,7 +40,7 @@
 				const { name, description, image_url, collection, creator } = asset;
 
 				// Navigation : bouton retour
-				createElement('p', { text: 'ici le bouton retour', color: '', myclass: 'text-center' }, navigation);
+				createElement('button', { text: "Retour", myonclick: `window.location.href='index.html'`, myclass: 'btn ml-2 mt-2', color: '#627264', bgcolor: '#A1CDA8', border: '#A1CDA8' }, navigation);
 				//createElement('button', { text: "Voir la fiche détails", myonclick: `index.html`, myclass: 'button' }, div);
 
 				const divProductDetail = document.getElementById('product_detail');
@@ -90,12 +50,12 @@
 				// Div Product Essential
 
 				createElement('h1', { text: 'Fiche produit', color: '', myclass: 'text-center' }, divProductEssential);
-				createElement('hr', { text: '', color: '', myclass: ['text-center', 'hr-horizontal', 'center', 'w-60'] }, divProductEssential);
+				createElement('hr', { text: '', color: '', myclass: 'text-center hr-horizontal center w-60' }, divProductEssential);
 				createElement('h2', { text: name, color: '', myclass: 'text-center' }, divProductEssential);
-				createElement('hr', { text: '', color: '', myclass: ['text-center', 'hr-horizontal', 'center', 'w-60'] }, divProductEssential);
+				createElement('hr', { text: '', color: '', myclass: 'text-center hr-horizontal center w-60' }, divProductEssential);
 
 				if (image_url) {
-					createElement('img', { imgsrc: image_url, myclass: ['img-responsive', 'img-product'] }, divProductEssential);
+					createElement('img', { imgsrc: image_url, myclass: 'img-responsive img-product' }, divProductEssential);
 				}
 
 				// Div Information : coontient 2 div
@@ -110,7 +70,7 @@
 				// Description
 				if (description) {
 					createElement('h3', { text: 'Description :', color: '', myclass: '' }, divProductInformationLeft);
-					createElement('hr', { text: '', color: '', myclass: ['ml-0', 'hr-horizontal', 'w-100'] }, divProductInformationLeft);
+					createElement('hr', { text: '', color: '', myclass: 'ml-0 hr-horizontal w-100' }, divProductInformationLeft);
 					createElement('p', { text: description, color: 'black', myclass: '' }, divProductInformationLeft);
 				}
 				// Créateur
@@ -123,14 +83,14 @@
 				divProductInformation.append(divProductInformationRight);
 
 				createElement('h3', { text: 'Collection :', color: '', myclass: '' }, divProductInformationRight);
-				createElement('hr', { text: '', color: '', myclass: ['ml-0', 'hr-horizontal', 'w-100'] }, divProductInformationRight);
+				createElement('hr', { text: '', color: '', myclass: 'ml-0 hr-horizontal w-100' }, divProductInformationRight);
 				// Nom de la collection
 				if (collection.name) {
 					createElement('p', { text: collection.name, color: 'black', myclass: '' }, divProductInformationRight);
 				}
 				// Image de la collection
 				if (collection.banner_image_url) {
-					createElement('img', { imgsrc: collection.banner_image_url, myclass: ['img-responsive', 'test'] }, divProductInformationRight);
+					createElement('img', { imgsrc: collection.banner_image_url, myclass: 'img-responsive test' }, divProductInformationRight);
 				}
 				// Date de création
 				if (collection.created_at) {
