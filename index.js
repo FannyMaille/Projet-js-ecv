@@ -84,7 +84,9 @@ document.addEventListener('datasLoaded', () => {
 })
 
 function createElement(tag, config, parent = null) {
-  const { text, imgsrc, myclass, color, myid, myonclick } = config || {};
+  const { text, imgsrc, myclass, style, width, height, value, name, checked, type, htmlFor, color, myid, myonclick } = config || {};
+
+  const root = document.querySelector('body')
 
   const element = document.createElement(tag);
 
@@ -98,6 +100,40 @@ function createElement(tag, config, parent = null) {
 
   if (myclass) {
     element.setAttribute('class', myclass);
+  }
+
+  if (width) {
+    element.setAttribute('width', width);
+  }
+
+  if (name) {
+    element.setAttribute('name', name);
+  }
+
+  if (checked == true) {
+    element.setAttribute('checked', 'checked');
+  }
+
+  if (height) {
+    element.setAttribute('height', height);
+  }
+
+  if (value) {
+    element.setAttribute('value', value);
+  }
+
+  if (style) {
+    Object.keys(style).forEach((prop) => {
+      element.style[prop] = style[prop]
+    })
+  }
+
+  if (type) {
+    element.setAttribute('type', type)
+  }
+
+  if (htmlFor) {
+    element.setAttribute('for', htmlFor)
   }
 
   if (myid) {
