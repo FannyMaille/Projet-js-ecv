@@ -48,116 +48,136 @@ template("home", () => {
     createElement("div", { myclass: "allentities" }, root);
     const allentities = document.getElementsByClassName("allentities")[0];
     let n = 0;
-    try {
-      const assets = await dataFetching(
-        "https://awesome-nft-app.herokuapp.com/"
-      );
-      assets.map(({ name, image_url, id, creator, collection, sales }) => {
-        //create Card
-        createElement("div", { myclass: "card" }, allentities);
-        const card = document.getElementsByClassName("card")[n];
-
-        //create div header
-        createElement("div", { myclass: "card-header" }, card);
-        const cardHeader = document.getElementsByClassName("card-header")[n];
-
-        //Create title and heart
-        createElement("div", { myclass: "titlenft" }, cardHeader);
-        const titlenft = document.getElementsByClassName("titlenft")[n];
-        createElement(
-          "h2",
-          { text: name, color: "#627264", myclass: "namenft" },
-          titlenft
+    for (let i = 1; i < 6; i++) {
+      try {
+        const assets = await dataFetching(
+          `https://awesome-nft-app.herokuapp.com/?page=${i}`
         );
-        createElement(
-          "a",
+        assets.map(({ name, image_url, id, creator, collection, sales }) => {
+          //create Card
+          createElement("div", { myclass: "card" }, allentities);
+          const card = document.getElementsByClassName("card")[n];
+  
+          //create div header
+          createElement("div", { myclass: "card-header" }, card);
+          const cardHeader = document.getElementsByClassName("card-header")[n];
+  
+          //Create title and heart
+          createElement("div", { myclass: "titlenft" }, cardHeader);
+          const titlenft = document.getElementsByClassName("titlenft")[n];
+          if(name){
+            createElement(
+              "h2",
+              { text: name, color: "#627264", myclass: "namenft" },
+              titlenft
+            );
+          }
+          else{
+            createElement(
+              "h2",
+              { text: "No Title Available", color: "#627264", myclass: "namenft" },
+              titlenft
+            );
+          }
+          
+          createElement(
+            "a",
+            {
+              myclass: "favorite",
+              dataFavorite: id,
+              dataFavoriteAddClass: "favoriteadd",
+              dataFavoriteRemoveClass: "favoriteremove",
+            },
+            titlenft
+          );
+  
+          //create p username
+          if (creator.username) {
+            createElement(
+              "p",
+              {
+                text: `Created by ${
+                  creator.username
+                } <br> On the ${collection.created_at.slice(0, 10)}`,
+                myclass: "card-subtitle text-gray",
+              },
+              cardHeader
+            );
+          } else {
+            createElement(
+              "p",
+              {
+                text: `Created by unknown Creator <br> On the ${collection.created_at.slice(
+                  0,
+                  10
+                )}`,
+                myclass: "card-subtitle text-gray",
+              },
+              cardHeader
+            );
+          }
+  
+          //create p sales
+          if (sales) {
+            createElement(
+              "p",
+              {
+                text: `${sales} sales`,
+                color: "#627264",
+                myclass: "card-subtitle",
+              },
+              cardHeader
+            );
+          } else {
+            createElement(
+              "p",
+              { text: `0 sales`, color: "#627264", myclass: "card-subtitle" },
+              cardHeader
+            );
+          }
+  
+          //create image
+            createElement("DIV", { myclass: "card-image" }, card);
+            const cardImage = document.getElementsByClassName("card-image")[n]; 
+          if (image_url) {
+            createElement(
+              "img",
+              { imgsrc: image_url, myclass: "img-responsive image" },
+              cardImage
+            );
+          }
+          else
           {
-            myclass: "favorite",
-            dataFavorite: id,
-            dataFavoriteAddClass: "favoriteadd",
-            dataFavoriteRemoveClass: "favoriteremove",
-          },
-          titlenft
-        );
-
-        //create p username
-        if (creator.username) {
+            createElement(
+              "img",
+              { imgsrc: "./assets/noImage.png", myclass: "img-responsive image" },
+              cardImage
+            );
+          }
+  
+          //create btn
+          createElement("div", { myclass: "card-footer" }, cardHeader);
+          const cardFooter = document.getElementsByClassName("card-footer")[n];
           createElement(
-            "p",
+            "a",
             {
-              text: `Created by ${
-                creator.username
-              } <br> On the ${collection.created_at.slice(0, 10)}`,
-              myclass: "card-subtitle text-gray",
-            },
-            cardHeader
-          );
-        } else {
-          createElement(
-            "p",
-            {
-              text: `Created by unknown Creator <br> On the ${collection.created_at.slice(
-                0,
-                10
-              )}`,
-              myclass: "card-subtitle text-gray",
-            },
-            cardHeader
-          );
-        }
-
-        //create p sales
-        if (sales) {
-          createElement(
-            "p",
-            {
-              text: `${sales} sales`,
+              text: "Voir la fiche détails",
+              myhref: `#/product/${id}`,
+              myclass: "btn",
               color: "#627264",
-              myclass: "card-subtitle",
+              bgcolor: "#A1CDA8",
+              border: "#A1CDA8",
             },
-            cardHeader
+            cardFooter
           );
-        } else {
-          createElement(
-            "p",
-            { text: `0 sales`, color: "#627264", myclass: "card-subtitle" },
-            cardHeader
-          );
-        }
-
-        //create image
-        if (image_url) {
-          createElement("DIV", { myclass: "card-image" }, card);
-          const cardImage = document.getElementsByClassName("card-image")[n];
-          createElement(
-            "img",
-            { imgsrc: image_url, myclass: "img-responsive image" },
-            cardImage
-          );
-        }
-
-        //create btn
-        createElement("div", { myclass: "card-footer" }, cardHeader);
-        const cardFooter = document.getElementsByClassName("card-footer")[n];
-        createElement(
-          "a",
-          {
-            text: "Voir la fiche détails",
-            myhref: `#/product/${id}`,
-            myclass: "btn",
-            color: "#627264",
-            bgcolor: "#A1CDA8",
-            border: "#A1CDA8",
-          },
-          cardFooter
-        );
-        n++;
-      });
-    } catch (error) {
-      console.log(error);
+          n++;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      const datasLoadedEvent = new Event("datasLoaded");
+      document.dispatchEvent(datasLoadedEvent); 
     }
-    const datasLoadedEvent = new Event("datasLoaded");
-    document.dispatchEvent(datasLoadedEvent);
   })();
 });
 
