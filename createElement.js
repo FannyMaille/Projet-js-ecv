@@ -14,6 +14,16 @@ function createElement(tag, config, parent = null) {
     dataFavoriteRemoveText,
     dataFavoriteAddClass,
     dataFavoriteRemoveClass,
+    height,
+    value,
+    name,
+    checked,
+    type,
+    htmlFor,
+    min,
+    max,
+    style, 
+    width,
   } = config || {};
   const root = document.querySelector('body');
   const element = document.createElement(tag);
@@ -76,6 +86,49 @@ function createElement(tag, config, parent = null) {
   if (text) {
     element.innerHTML = text;
   }
+
+  if (height) {
+    element.setAttribute('height', height);
+  }
+
+  if (value) {
+    element.setAttribute('value', value);
+  }
+
+  if (name) {
+    element.setAttribute('name', name);
+  }
+
+  if (checked == true) {
+    element.setAttribute('checked', 'checked');
+  }
+
+  if (width) {
+    element.setAttribute('width', width);
+  }
+
+  if (min) {
+    element.setAttribute('min', min);
+  }
+
+  if (max) {
+    element.setAttribute('max', max);
+  }
+
+  if (style) {
+    Object.keys(style).forEach((prop) => {
+      element.style[prop] = style[prop]
+    })
+  }
+
+  if (type) {
+    element.setAttribute('type', type)
+  }
+
+  if (htmlFor) {
+    element.setAttribute('for', htmlFor)
+  }
+
   if (!parent) {
     root.appendChild(element);
   } else {
