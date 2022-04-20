@@ -46,6 +46,10 @@ template("home", () => {
 		const cardHeader = createElement("div", { myclass: "card-header card-header-skeleton" }, card);
 		const title = createElement("div", { myclass: "title-skeleton" }, cardHeader);
 		const cardImage = createElement("div", { myclass: "card-image card-image-skeleton" }, card);
+		const subtitle = createElement("div", { myclass: "card-subtitle-skeleton" }, cardHeader);
+		const sale = createElement("div", { myclass: "card-sale-skeleton" }, cardHeader);
+		const button = createElement("div", { myclass: "card-button-skeleton" }, cardHeader);
+
 	}
 
 
@@ -191,6 +195,16 @@ template("product", () => {
       },
       root
     );
+
+			// Skeleton
+		const skeletonProduct = createElement("div", { myclass: "skeletonentities blink_me"}, root);
+		//create Card
+		const card = createElement("div", { myclass: "card card-product-skeleton" }, skeletonProduct);
+		const titleProduct = createElement("div", { myclass: "title-product-skeleton" }, card);
+		const titleProductNft = createElement("div", { myclass: "title-nft-skeleton" }, card);
+		const imgProduct = createElement("div", { myclass: "img-skeleton" }, card);
+
+
     const id_nft = window.location.hash.slice(10);
 
     async function dataFetchingSingle(url) {
@@ -366,6 +380,7 @@ template("product", () => {
     } catch (error) {
       console.log(error);
     }
+		skeletonProduct.remove();
   })();
 });
 
