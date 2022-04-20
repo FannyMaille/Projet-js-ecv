@@ -52,6 +52,40 @@ h2 {
 	margin: auto;
 }
 
+.green {
+    background-color: #A1CDA8;
+    border-color: #A1CDA8;
+    color: #627264;
+}
+
+.green:hover {
+    background-color: #A1CDA8;
+    border-color: #A1CDA8;
+    color: #ECECEC;
+}
+.green:focus {
+    background-color: #A1CDA8;
+    border-color: #627264;
+    color: #ECECEC;
+}
+
+.selectDiv {
+    width: 250px;
+}
+.searchbar {
+    border-color: #A1CDA8;
+    border-radius: 5px;
+}
+.searchbar:active  {
+    border-color: #A1CDA8;
+}
+.searchbar:hover  {
+    border-color: #A1CDA8;
+}
+.icon-menu{
+    color:#627264
+}
+
 .product_information {
 	display: flex;
 	flex-direction: row;
@@ -94,6 +128,13 @@ h2 {
   align-items: center;
   justify-content: center;
   gap: 50px 25px;
+}
+.filters{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .titlenft {

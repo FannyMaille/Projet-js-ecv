@@ -104,12 +104,16 @@ const initFavorites = () => {
 
  const initFilters = async () => {
     const filterDiv = document.getElementsByClassName('filters')[0];
-    const data = await dataFetching("https://awesome-nft-app.herokuapp.com/")
+    const data = [];
+    for ( let i = 0; i < 6 ; i++ ) {
+        const pageData = await dataFetching(`https://awesome-nft-app.herokuapp.com/?page=${i}`)
+        data.push.apply(data, pageData);
+    }
     let creatorNames = data.map((nft) => nft.creator.username );
     creatorNames = creatorNames.filter((a, b) => creatorNames.indexOf(a) === b );
     creatorNames = creatorNames.filter((e) => e.length !== 0);
     const selector = filterDiv.querySelector('select');
-    selector.options.add(new Option( 'All', 'all creators', true, true ));
+    selector.options.add(new Option( 'Creator', 'all creators', true, true ));
     for ( const o of creatorNames ) {
         selector.options.add(new Option( o ));
     };
@@ -118,6 +122,14 @@ const initFavorites = () => {
         const newList = data.filter(( item ) => item.creator.username.toLowerCase().includes( selector.value.toLowerCase()))
         getProducts( newList );
     })
+    
+    const searchBar = filterDiv.querySelector('input');
+    const clearIcon = filterDiv.querySelector('i');
+    clearIcon.addEventListener("click", async () => {
+        searchBar.value = "";
+       await searchByKeyword();
+    })
+   
 }
 
 const initApp = () => {

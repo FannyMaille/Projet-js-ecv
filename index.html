@@ -26,16 +26,23 @@
       //creates filters div 
       createElement('div',{ myclass: 'filters'}, root );
       const filterDiv = document.getElementsByClassName('filters')[0];
-
+      
       //adds filter buttons
-      createElement('button',{ myclass: 'btn', myonclick:"sortbySales(false)", text:"Show all"}, filterDiv );
-      createElement('button',{ myclass: 'btn', myonclick:"sortbySales(true)", text:"Sort by Sales"}, filterDiv );
-
+      createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(false)", text:"Show all"}, filterDiv );
+      createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(true)", text:"Sort by Sales"}, filterDiv );
+      
       //add creators selectors
-      createElement('select',{ myclass: 'sel', id:"creatorName"}, filterDiv );
-
+      createElement('div', { myclass: 'selectDiv' }, filterDiv );
+      const selectDiv = document.getElementsByClassName('selectDiv')[0];
+      createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
+      createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
+      
       //adds filter searchbar
-      createElement('input',{ myclass: 'searchbar', type: "text", myonkeyup:"searchByKeyword()", placeholder: 'Type in anything'}, filterDiv );
+      createElement('div', { myclass: 'searchDiv' }, filterDiv );
+      const searchDiv = document.getElementsByClassName('searchDiv')[0];
+      createElement('input',{ myclass: 'searchbar', type: "text", myonkeyup:"searchByKeyword()", placeholder: 'Type in anything'}, searchDiv );
+      createElement('i',{ myclass: 'icon icon-cross', myonkeyup:"emptySearchbar()"}, searchDiv );
+        
 
       //create main div
       createElement('div', { myclass: 'allentities' }, root);
