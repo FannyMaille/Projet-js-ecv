@@ -92,18 +92,19 @@ const initFavorites = () => {
 };
 
 const initApp = () => {
-  initFavorites();
-};
+    initFavorites()
+}
 
-document.addEventListener("datasLoaded", () => {
-  initApp();
-});
+document.addEventListener('datasLoaded', () => {
+    initApp();
+})
 
 window.addEventListener("load", (e) => {
   // Router
   // Define the mappings route->template.
   route("/", "home");
   route(`/product/`, "product");
+  route(`/nftcreator/`, "nftcreator");
 
   window.addEventListener("hashchange", router);
   router(e);
