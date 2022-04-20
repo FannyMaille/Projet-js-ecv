@@ -203,3 +203,7 @@ h2 {
   flex-direction: column;
   gap: 16px;
 }
+
+.bntnft{
+  text-align: center;
+}

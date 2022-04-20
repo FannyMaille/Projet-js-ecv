@@ -29,18 +29,6 @@ function route(path, template) {
 template("home", () => {
   const root = document.querySelector("body");
   createElement(
-    "a",
-    {
-      text: "Créer son propre NFT",
-      myhref: `#/nftcreator/`,
-      myclass: "btn",
-      color: "#627264",
-      bgcolor: "#A1CDA8",
-      border: "#A1CDA8",
-    },
-    root
-  );
-  createElement(
     "h1",
     {
       text: "Welcome on the website for the nft",
@@ -48,6 +36,24 @@ template("home", () => {
       myclass: "title",
     },
     root
+  );
+
+  const divBtn = createElement("div", {
+    myclass: "title",
+  },
+  root);
+
+  createElement(
+    "a",
+    {
+      text: "Créer son propre NFT",
+      myhref: `#/nftcreator/`,
+      myclass: "btn bntnft",
+      color: "#627264",
+      bgcolor: "#A1CDA8",
+      border: "#A1CDA8",
+    },
+    divBtn
   );
   // Skeleton
   const skeleton = createElement(
