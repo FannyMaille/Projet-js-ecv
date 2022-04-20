@@ -454,8 +454,17 @@ template("nftcreator", () => {
       },
       root
     );
+    createElement(
+      "h1",
+      {
+        text: "Create your own NFT",
+        color: "#627264",
+        myclass: "title",
+      },
+      root
+    );
     const size = 20;
-    const cellSize = 42;
+    const cellSize = 40;
     let nftSize = size * cellSize;
 
     let nft = {
@@ -489,7 +498,7 @@ template("nftcreator", () => {
       // Bloc gauche de paramétrage du NFT
       const divEditor = createElement(
         "div",
-        { myclass: "editor p-2" },
+        { myclass: "editor p-2 card" },
         container
       );
 
@@ -521,7 +530,10 @@ template("nftcreator", () => {
 
         const nftButton = createElement(
           "button",
-          { type: "button", text: "Load my NFT", myclass: "btn mb-2" },
+          { type: "button", text: "Load", myclass: "btn ml-2 mt-2",
+          color: "#627264",
+          bgcolor: "#A1CDA8",
+          border: "#A1CDA8",},
           divEditor
         );
 
@@ -545,12 +557,12 @@ template("nftcreator", () => {
       );
       const sizeLabel = createElement(
         "label",
-        { text: "Nb of cells (1 to 20)", htmlFor: "size" },
+        { text: "Size (number of cells from 1 to 24)", htmlFor: "size" },
         blocSize
       );
       const sizeInput = createElement(
         "input",
-        { type: "number", max: 20, min: 1, myid: "size", value: nft.size },
+        { type: "number", max: 24, min: 1, myid: "size", value: nft.size },
         blocSize
       );
 
@@ -617,7 +629,7 @@ template("nftcreator", () => {
       );
       const colorInput = createElement(
         "input",
-        { type: "color", myid: "color", value: currentColor },
+        { type: "color", myid: "color", myclass: 'col-12', value: currentColor },
         blocColor
       );
 
@@ -633,7 +645,7 @@ template("nftcreator", () => {
       );
       const dividerTitle = createElement(
         "label",
-        { text: "Show the grid on the NFT ?" },
+        { text: "Display grid on editor ?" },
         blocDividers
       );
       const dividerRadio = createElement(
@@ -693,10 +705,19 @@ template("nftcreator", () => {
         canvas.dispatchEvent(updateCanvas);
       });
 
+      const btnBloc = createElement(
+        "div",
+        { style: { display: "flex", gap: "4px", alignItems: "center", justifyContent: 'space-between' } },
+        divEditor
+      );
+
       const downloadButton = createElement(
         "button",
-        { type: "button", text: "Download my NFT", myclass: "btn" },
-        divEditor
+        { type: "button", text: "Download", myclass: "btn ml-2 mt-2 col-6",
+        color: "#627264",
+        bgcolor: "#A1CDA8",
+        border: "#A1CDA8",},
+        btnBloc
       );
 
       downloadButton.addEventListener("click", (e) => {
@@ -713,8 +734,11 @@ template("nftcreator", () => {
 
       const saveButton = createElement(
         "button",
-        { type: "button", text: "Save my NFT", myclass: "btn" },
-        divEditor
+        { type: "button", text: "Save", myclass: "btn ml-2 mt-2 col-6",
+        color: "#627264",
+        bgcolor: "#A1CDA8",
+        border: "#A1CDA8", },
+        btnBloc
       );
 
       saveButton.addEventListener("click", (e) => {
@@ -741,7 +765,7 @@ template("nftcreator", () => {
           id: "myCanvas",
           width: nftSize,
           height: nftSize,
-          style: { border: "solid 1px #000000" },
+          style: { border: "solid 1px #000000", margin: 'auto',  },
         },
         container
       );
