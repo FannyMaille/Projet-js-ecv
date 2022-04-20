@@ -1,4 +1,6 @@
 import createElement from "./createElement.js";
+import { dataFetchingSingle } from "./dataFetching.js";
+import { getProducts } from "./getProducts.js";
 //Routing
 
 // Both set of different routes and template generation functions
@@ -85,180 +87,29 @@ template("home", () => {
   }
 
   (async () => {
-    async function dataFetching(url) {
-      const raw = await fetch(url);
-      const { assets } = await raw.json();
-      return assets;
-    }
 
-                //creates filters div 
-                createElement('div',{ myclass: 'filters'}, root );
-                const filterDiv = document.getElementsByClassName('filters')[0];
-                
-                //adds filter buttons
-                createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(false)", text:"Show all"}, filterDiv );
-                createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(true)", text:"Sort by Sales"}, filterDiv );
-                
-                //add creators selectors
-                createElement('div', { myclass: 'selectDiv' }, filterDiv );
-                const selectDiv = document.getElementsByClassName('selectDiv')[0];
-                createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
-                createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
-                
-                //adds filter searchbar
-                createElement('div', { myclass: 'searchDiv' }, filterDiv );
-                const searchDiv = document.getElementsByClassName('searchDiv')[0];
-                createElement('input',{ myclass: 'searchbar', type: "text", myonkeyup:"searchByKeyword()", placeholder: 'Type in anything'}, searchDiv );
-                createElement('i',{ myclass: 'icon icon-cross' }, searchDiv );
+    //creates filters div 
+    createElement('div',{ myclass: 'filters'}, root );
+    const filterDiv = document.getElementsByClassName('filters')[0];
 
+    //adds filter buttons
+    createElement('button',{ myclass: 'btn green select-all', myonclick:"false", text:"Show all"}, filterDiv );
+    createElement('button',{ myclass: 'btn green show-sales', myonclick:"true", text:"Sort by Sales"}, filterDiv );
+
+    //adds creators selectors
+    createElement('div', { myclass: 'selectDiv' }, filterDiv );
+    const selectDiv = document.getElementsByClassName('selectDiv')[0];
+    createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
+    createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
+
+    //adds searchbar
+    createElement('div', { myclass: 'searchDiv' }, filterDiv );
+    const searchDiv = document.getElementsByClassName('searchDiv')[0];
+    createElement('input',{ myclass: 'searchbar', type: "text", placeholder: 'Type in anything'}, searchDiv );
+    createElement('i',{ myclass: 'icon icon-cross' }, searchDiv );
 
     //create my main div
-    const allentities = createElement("div", { myclass: "allentities" }, root);
-    for (let i = 1; i < 6; i++) {
-      try {
-        const assets = await dataFetching(
-          `https://awesome-nft-app.herokuapp.com/?page=${i}`
-        );
-        assets.map(({ name, image_url, id, creator, collection, sales }) => {
-          //create Card
-          const card = createElement("div", { myclass: "card" }, allentities);
-
-          //create div header
-          const cardHeader = createElement(
-            "div",
-            { myclass: "card-header" },
-            card
-          );
-
-          //Create title and heart
-          const titlenft = createElement(
-            "div",
-            { myclass: "titlenft" },
-            cardHeader
-          );
-          if (name) {
-            createElement(
-              "h2",
-              { text: name, color: "#627264", myclass: "namenft" },
-              titlenft
-            );
-          } else {
-            createElement(
-              "h2",
-              {
-                text: "No Title Available",
-                color: "#627264",
-                myclass: "namenft",
-              },
-              titlenft
-            );
-          }
-
-          createElement(
-            "a",
-            {
-              myclass: "favorite",
-              dataFavorite: id,
-              dataFavoriteAddClass: "favoriteadd",
-              dataFavoriteRemoveClass: "favoriteremove",
-            },
-            titlenft
-          );
-
-          //create p username
-          if (creator.username) {
-            createElement(
-              "p",
-              {
-                text: `Created by ${
-                  creator.username
-                } <br> On the ${collection.created_at.slice(0, 10)}`,
-                myclass: "card-subtitle text-gray",
-              },
-              cardHeader
-            );
-          } else {
-            createElement(
-              "p",
-              {
-                text: `Created by unknown Creator <br> On the ${collection.created_at.slice(
-                  0,
-                  10
-                )}`,
-                myclass: "card-subtitle text-gray",
-              },
-              cardHeader
-            );
-          }
-
-          //create p sales
-          if (sales) {
-            createElement(
-              "p",
-              {
-                text: `${sales} sales`,
-                color: "#627264",
-                myclass: "card-subtitle",
-              },
-              cardHeader
-            );
-          } else {
-            createElement(
-              "p",
-              { text: `0 sales`, color: "#627264", myclass: "card-subtitle" },
-              cardHeader
-            );
-          }
-
-          //create image
-          const cardImage = createElement(
-            "DIV",
-            { myclass: "card-image" },
-            card
-          );
-          if (image_url) {
-            createElement(
-              "img",
-              { imgsrc: image_url, myclass: "img-responsive image" },
-              cardImage
-            );
-          } else {
-            createElement(
-              "img",
-              {
-                imgsrc: "./assets/noImage.png",
-                myclass: "img-responsive image",
-              },
-              cardImage
-            );
-          }
-
-          //create btn
-          const cardFooter = createElement(
-            "div",
-            { myclass: "card-footer" },
-            cardHeader
-          );
-          createElement(
-            "a",
-            {
-              text: "Voir la fiche détails",
-              myhref: `#/product/${id}`,
-              myclass: "btn",
-              color: "#627264",
-              bgcolor: "#A1CDA8",
-              border: "#A1CDA8",
-            },
-            cardFooter
-          );
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    const datasLoadedEvent = new Event("datasLoaded");
-    document.dispatchEvent(datasLoadedEvent);
-
+    getProducts();
     skeleton.remove();
   })();
 });
@@ -279,11 +130,6 @@ template("product", () => {
       root
     );
     const id_nft = window.location.hash.slice(10);
-
-    async function dataFetchingSingle(url) {
-      const raw = await fetch(url);
-      return await raw.json();
-    }
 
     //création des divs
     createElement(
