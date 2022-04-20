@@ -7,7 +7,6 @@ let templates = {};
 
 // Register a template (this is to mimic a template engine)
 function template(name, templateFunction) {
-  console.log("recall template builder");
   return (templates[name] = templateFunction);
 }
 
@@ -15,7 +14,6 @@ function template(name, templateFunction) {
 // when entering that path. A template can be a string (file name), or a function that
 // will directly create the DOM objects.
 function route(path, template) {
-  console.log("recall route");
   if (typeof template === "function") {
     return (routes[path] = template);
   } else if (typeof template === "string") {
@@ -92,6 +90,28 @@ template("home", () => {
       const { assets } = await raw.json();
       return assets;
     }
+
+                //creates filters div 
+                createElement('div',{ myclass: 'filters'}, root );
+                const filterDiv = document.getElementsByClassName('filters')[0];
+                
+                //adds filter buttons
+                createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(false)", text:"Show all"}, filterDiv );
+                createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(true)", text:"Sort by Sales"}, filterDiv );
+                
+                //add creators selectors
+                createElement('div', { myclass: 'selectDiv' }, filterDiv );
+                const selectDiv = document.getElementsByClassName('selectDiv')[0];
+                createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
+                createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
+                
+                //adds filter searchbar
+                createElement('div', { myclass: 'searchDiv' }, filterDiv );
+                const searchDiv = document.getElementsByClassName('searchDiv')[0];
+                createElement('input',{ myclass: 'searchbar', type: "text", myonkeyup:"searchByKeyword()", placeholder: 'Type in anything'}, searchDiv );
+                createElement('i',{ myclass: 'icon icon-cross' }, searchDiv );
+
+
     //create my main div
     const allentities = createElement("div", { myclass: "allentities" }, root);
     for (let i = 1; i < 6; i++) {
@@ -233,7 +253,7 @@ template("home", () => {
           );
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     const datasLoadedEvent = new Event("datasLoaded");
@@ -302,7 +322,6 @@ template("product", () => {
       const asset = await dataFetchingSingle(
         `https://awesome-nft-app.herokuapp.com/nft/${id_nft}`
       );
-      console.log(asset);
       const { name, description, image_url, collection, creator } = asset;
 
       const divProductDetail = document.getElementById("product_detail");
@@ -434,7 +453,7 @@ template("product", () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   })();
 });
@@ -722,7 +741,6 @@ template("nftcreator", () => {
           window.alert("Creator name and NFT name are required !");
         } else {
           let existingNftId = nfts.findIndex((n) => n.name == nft.name);
-          console.log(existingNftId, nfts, nft);
           if (existingNftId == -1) {
             nfts.push(nft);
           } else {
@@ -832,9 +850,7 @@ function router(evt) {
   const root = document.querySelector("body");
   root.innerHTML = "";
   try {
-    // console.log(window.location.hash.slice(10));
     let url = window.location.hash.slice(1) || "/";
-    console.log({ url, routes, templates });
     const resolvedRoute = resolveRoute(
       url.includes("/product/") ? "/product/" : url
     );
