@@ -27,7 +27,6 @@ function route(path, template) {
 
 // Register the templates.
 template("home", () => {
-  console.log("coucou home");
   const root = document.querySelector("body");
   createElement(
     "h1",
@@ -38,6 +37,21 @@ template("home", () => {
     },
     root
   );
+	// Skeleton
+	const skeleton = createElement("div", { myclass: "skeletonentities blink_me"}, root);
+	//create Card
+	for ( let i=0; i < 6; i++) {
+		const card = createElement("div", { myclass: "card card-skeleton" }, skeleton);
+		//create div header
+		const cardHeader = createElement("div", { myclass: "card-header card-header-skeleton" }, card);
+		const title = createElement("div", { myclass: "title-skeleton" }, cardHeader);
+		const cardImage = createElement("div", { myclass: "card-image card-image-skeleton" }, card);
+	}
+
+
+
+
+
   (async () => {
     async function dataFetching(url) {
       const raw = await fetch(url);
@@ -54,8 +68,7 @@ template("home", () => {
       );
       assets.map(({ name, image_url, id, creator, collection, sales }) => {
         //create Card
-        createElement("div", { myclass: "card" }, allentities);
-        const card = document.getElementsByClassName("card")[n];
+        const card = createElement("div", { myclass: "card" }, allentities);
 
         //create div header
         createElement("div", { myclass: "card-header" }, card);
@@ -158,11 +171,12 @@ template("home", () => {
     }
     const datasLoadedEvent = new Event("datasLoaded");
     document.dispatchEvent(datasLoadedEvent);
+
+		skeleton.remove();
   })();
 });
 
 template("product", () => {
-  console.log("coucou product");
   (async () => {
     const root = document.querySelector("body");
     createElement(
@@ -262,7 +276,7 @@ template("product", () => {
       if (image_url) {
         createElement(
           "img",
-          { imgsrc: image_url, myclass: "img-responsive img-product" },
+          { imgsrc: image_url, myclass: "img-responsive img-product js-lazyImg" },
           divProductEssential
         );
       }
@@ -336,7 +350,7 @@ template("product", () => {
           "img",
           {
             imgsrc: collection.banner_image_url,
-            myclass: "img-responsive test",
+            myclass: "img-responsive js-lazyImg",
           },
           divProductInformationRight
         );
@@ -382,3 +396,20 @@ function router(evt) {
 }
 
 export { route, router };
+
+// Lazy Loading
+
+const imageIntersecObserver = new IntersectionObserver((entries, imgObserver) => {
+	entries.forEach((entry) => {
+			if(entry.isIntersecting) {
+					const lazyImage = entry.target
+					lazyImage.src = lazyImage.dataset.src
+			}
+	})
+});
+
+
+
+
+
+

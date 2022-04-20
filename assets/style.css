@@ -94,7 +94,7 @@ h2 {
   margin: 50px 0;
 }
 
-.allentities {
+.allentities, .skeletonentities {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -159,4 +159,36 @@ h2 {
 .favoriteremove:before,
 .favoriteremove:after {
   background-color: #627264;
+}
+
+/* Skeleton */
+
+.card-skeleton {
+	background-color: #d2d2d2;
+	height: 600px;
+	width: 415px;
+}
+
+.title-skeleton {
+	width: 250px;
+	background-color: rgb(186, 186, 186);
+	height: 35px;
+}
+
+.card-image-skeleton {
+	background-color: rgb(143, 143, 143);
+	flex-grow: 1;
+}
+
+.card-header-skeleton {
+	height: 230px;
+}
+
+.blink_me {
+	animation: blinker 1.5s linear infinite;
+}
+@keyframes blinker {
+	50% {
+		opacity: 0.3;
+	}
 }
