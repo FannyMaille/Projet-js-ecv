@@ -1,3 +1,6 @@
+import { route, router } from "./routing.js";
+import createElement from "./createElement.js";
+
 /**
  * Fonctionnalités des favoris :
  *
@@ -133,115 +136,43 @@ const initFavorites = () => {
 }
 
 const initApp = () => {
-  initFavorites();
-};
+    initFavorites();
+    initFilters();
+}
 
-document.addEventListener("datasLoaded", () => {
-  initApp();
-  initFilters();
+document.addEventListener('datasLoaded', () => {
+    initApp();
+})
+
+window.addEventListener("load", (e) => {
+  // Router
+  // Define the mappings route->template.
+  route("/", "home");
+  route(`/product/`, "product");
+  route(`/nftcreator/`, "nftcreator");
+
+  window.addEventListener("hashchange", router);
+  router(e);
 });
+async function sortbySales(param) {
+    if ( param ) {
+        const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/`);
+        const newList = data.sort(( item1, item2 ) => item2.sales - item1.sales );
+        getProducts( newList );
+    } else {
+        getProducts();
+    }
+}
 
-
-function createElement(tag, config, parent = null) {
-  const {
-    bgcolor,
-    border,
-    color,
-    dataFavorite,
-    dataFavoriteAddClass,
-    dataFavoriteRemoveClass,
-    dataFavoriteRemoveText,
-    dataFavoriteText,
-    imgsrc,
-    myclass,
-    myid,
-    myonclick,
-    myonkeyup,
-    myonchange,
-    placeholder,
-    text,
-    type
-  } = config || {};
-
-  const element = document.createElement(tag);
-
-  if (color) {
-    element.style.color = color;
-  }
-
-  if (bgcolor) {
-    element.style.backgroundColor = bgcolor;
-  }
-
-  if (border) {
-    element.style.borderColor = border;
-  }
-
-  if (dataFavorite) {
-    element.setAttribute("data-favorite", dataFavorite);
-  }
-
-  if (dataFavoriteText) {
-    element.setAttribute("data-favorite-add-text", dataFavoriteText);
-  }
-
-  if (dataFavoriteRemoveText) {
-    element.setAttribute("data-favorite-remove-text", dataFavoriteRemoveText);
-  }
-
-  if (dataFavoriteAddClass) {
-    element.setAttribute("data-favorite-added-classes", dataFavoriteAddClass);
-  }
-
-  if (dataFavoriteRemoveClass) {
-    element.setAttribute(
-      "data-favorite-removed-classes",
-      dataFavoriteRemoveClass
-    );
-  }
-
-  if (imgsrc) {
-    element.setAttribute("src", imgsrc);
-  }
-
-  if (myclass) {
-    element.setAttribute("class", myclass);
-  }
-
-  if (myid) {
-    element.setAttribute("id", myid);
-  }
-
-  if (myonclick) {
-    element.setAttribute("onclick", myonclick);
-  }
-
-  if (myonkeyup) {
-    element.setAttribute("onkeyup", myonkeyup);
-  }
-
-  if (myonchange) {
-    element.onchange = myonchange;
-
-  }
-
-  if (placeholder) {
-    element.setAttribute("placeholder", placeholder);
-  }
-
-  if (text) {
-    element.innerHTML = text;
-  }
-  if (type) {
-    element.setAttribute("type",type);
-  }
-
-  if (!parent) {
-    root.appendChild(element);
-  } else {
-    parent.appendChild(element);
-  }
-  return element;
+async function searchByKeyword() {
+    const filterDiv = document.getElementsByClassName('filters')[0];
+    const input = filterDiv.querySelector('input')
+    if ( input.value.toLowerCase().trim().length > 0 ) {
+        const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/search?q=${ input.value.toLowerCase().trim() }`);
+        getProducts( data );
+    } else {
+        getProducts();
+    }
 }
 
 async function getProducts( data ) {
@@ -306,25 +237,4 @@ async function getProducts( data ) {
     }
     
 
-}
-
-async function sortbySales(param) {
-    if ( param ) {
-        const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/`);
-        const newList = data.sort(( item1, item2 ) => item2.sales - item1.sales );
-        getProducts( newList );
-    } else {
-        getProducts();
-    }
-}
-
-async function searchByKeyword() {
-    const filterDiv = document.getElementsByClassName('filters')[0];
-    const input = filterDiv.querySelector('input')
-    if ( input.value.toLowerCase().trim().length > 0 ) {
-        const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/search?q=${ input.value.toLowerCase().trim() }`);
-        getProducts( data );
-    } else {
-        getProducts();
-    }
 }

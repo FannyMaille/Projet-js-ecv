@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="node_modules/spectre.css/dist/spectre.min.css">
-	<link rel="stylesheet" href="node_modules/spectre.css/dist/spectre-exp.min.css">
-	<link rel="stylesheet" href="node_modules/spectre.css/dist/spectre-icons.min.css">
-	<link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre-exp.min.css">
+  <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre-icons.min.css">
+  <link rel="stylesheet" href="assets/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="index.js" type="text/javascript"></script>
+  <script src="index.js" type="module"></script>
 
   <title>
     Projet JS
@@ -19,42 +19,6 @@
 
 <body>
   <script>
-    const root = document.querySelector('body');
-    createElement('h1', { text: "Welcome on the website for the nft", color: '#627264', myclass: 'title' }, root);
-
-    (async () => {
-      //creates filters div 
-      createElement('div',{ myclass: 'filters'}, root );
-      const filterDiv = document.getElementsByClassName('filters')[0];
-      
-      //adds filter buttons
-      createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(false)", text:"Show all"}, filterDiv );
-      createElement('button',{ myclass: 'btn green', myonclick:"sortbySales(true)", text:"Sort by Sales"}, filterDiv );
-      
-      //add creators selectors
-      createElement('div', { myclass: 'selectDiv' }, filterDiv );
-      const selectDiv = document.getElementsByClassName('selectDiv')[0];
-      createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
-      createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
-      
-      //adds filter searchbar
-      createElement('div', { myclass: 'searchDiv' }, filterDiv );
-      const searchDiv = document.getElementsByClassName('searchDiv')[0];
-      createElement('input',{ myclass: 'searchbar', type: "text", myonkeyup:"searchByKeyword()", placeholder: 'Type in anything'}, searchDiv );
-      createElement('i',{ myclass: 'icon icon-cross', myonkeyup:"emptySearchbar()"}, searchDiv );
-        
-
-      //create main div
-      createElement('div', { myclass: 'allentities' }, root);
-      try {
-        getProducts()
-      } catch (error) {
-        console.log(error);
-      }
-      const datasLoadedEvent = new Event('datasLoaded')
-      document.dispatchEvent(datasLoadedEvent)
-    })();
-
   </script>
 </body>
 
