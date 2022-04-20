@@ -170,7 +170,7 @@ h2 {
 
 .card-skeleton {
 	background-color: #d2d2d2;
-	height: 600px;
+	height: 660px;
 	width: 415px;
 }
 
@@ -186,7 +186,7 @@ h2 {
 }
 
 .card-header-skeleton {
-	height: 230px;
+	height: 240px;
 }
 
 .blink_me {
@@ -201,7 +201,10 @@ h2 {
 .editor{
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+  flex-grow: 1;
+  max-width: 400px;
+  padding: 16px 12px !important;
 }
 
 .bntnft{
