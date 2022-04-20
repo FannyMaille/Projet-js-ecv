@@ -84,7 +84,7 @@ document.addEventListener('datasLoaded', () => {
 })
 
 function createElement(tag, config, parent = null) {
-  const { text, imgsrc, myclass, style, width, height, value, name, checked, type, htmlFor, color, myid, myonclick } = config || {};
+  const { text, imgsrc, myclass, style, width, height, value, name, checked, type, htmlFor, color, myid, myonclick, min, max } = config || {};
 
   const root = document.querySelector('body')
 
@@ -108,6 +108,14 @@ function createElement(tag, config, parent = null) {
 
   if (name) {
     element.setAttribute('name', name);
+  }
+
+  if (min) {
+    element.setAttribute('min', min);
+  }
+
+  if (max) {
+    element.setAttribute('max', max);
   }
 
   if (checked == true) {
