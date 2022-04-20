@@ -56,29 +56,29 @@ template("home", () => {
     root
   );
   //create Card
-  for (let i = 0; i < 6; i++) {
-    const card = createElement(
-      "div",
-      { myclass: "card card-skeleton" },
-      skeleton
-    );
-    //create div header
-    const cardHeader = createElement(
-      "div",
-      { myclass: "card-header card-header-skeleton" },
-      card
-    );
-    const title = createElement(
-      "div",
-      { myclass: "title-skeleton" },
-      cardHeader
-    );
-    const cardImage = createElement(
-      "div",
-      { myclass: "card-image card-image-skeleton" },
-      card
-    );
-  }
+  // for (let i = 0; i < 6; i++) {
+  //   const card = createElement(
+  //     "div",
+  //     { myclass: "card card-skeleton" },
+  //     skeleton
+  //   );
+  //   //create div header
+  //   const cardHeader = createElement(
+  //     "div",
+  //     { myclass: "card-header card-header-skeleton" },
+  //     card
+  //   );
+  //   const title = createElement(
+  //     "div",
+  //     { myclass: "title-skeleton" },
+  //     cardHeader
+  //   );
+  //   const cardImage = createElement(
+  //     "div",
+  //     { myclass: "card-image card-image-skeleton" },
+  //     card
+  //   );
+  // }
 
   (async () => {
     async function dataFetching(url) {
@@ -93,24 +93,35 @@ template("home", () => {
     for (let i = 1; i < 6; i++) {
       try {
         const assets = await dataFetching(
-          "https://awesome-nft-app.herokuapp.com/"
+          `https://awesome-nft-app.herokuapp.com/?page=${i}`
         );
         assets.map(({ name, image_url, id, creator, collection, sales }) => {
           //create Card
-          const card = createElement("div", { myclass: "card" }, allentities);
-
+          createElement("div", { myclass: "card" }, allentities);
+          const card = document.getElementsByClassName("card")[n];
+  
           //create div header
           createElement("div", { myclass: "card-header" }, card);
           const cardHeader = document.getElementsByClassName("card-header")[n];
-
+  
           //Create title and heart
           createElement("div", { myclass: "titlenft" }, cardHeader);
           const titlenft = document.getElementsByClassName("titlenft")[n];
-          createElement(
-            "h2",
-            { text: name, color: "#627264", myclass: "namenft" },
-            titlenft
-          );
+          if(name){
+            createElement(
+              "h2",
+              { text: name, color: "#627264", myclass: "namenft" },
+              titlenft
+            );
+          }
+          else{
+            createElement(
+              "h2",
+              { text: "No Title Available", color: "#627264", myclass: "namenft" },
+              titlenft
+            );
+          }
+          
           createElement(
             "a",
             {
@@ -121,7 +132,7 @@ template("home", () => {
             },
             titlenft
           );
-
+  
           //create p username
           if (creator.username) {
             createElement(
@@ -147,7 +158,7 @@ template("home", () => {
               cardHeader
             );
           }
-
+  
           //create p sales
           if (sales) {
             createElement(
@@ -166,18 +177,26 @@ template("home", () => {
               cardHeader
             );
           }
-
+  
           //create image
-          if (image_url) {
             createElement("DIV", { myclass: "card-image" }, card);
-            const cardImage = document.getElementsByClassName("card-image")[n];
+            const cardImage = document.getElementsByClassName("card-image")[n]; 
+          if (image_url) {
             createElement(
               "img",
               { imgsrc: image_url, myclass: "img-responsive image" },
               cardImage
             );
           }
-
+          else
+          {
+            createElement(
+              "img",
+              { imgsrc: "./assets/noImage.png", myclass: "img-responsive image" },
+              cardImage
+            );
+          }
+  
           //create btn
           createElement("div", { myclass: "card-footer" }, cardHeader);
           const cardFooter = document.getElementsByClassName("card-footer")[n];
