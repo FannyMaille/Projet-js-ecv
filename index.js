@@ -149,8 +149,10 @@ const initFilters = async () => {
 
   const input = filterDiv.querySelector("input");
   input.innerHTML = "";
+  let timeout = null;
   input.addEventListener("keyup", async function () {
-    setTimeout(async () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(async () => {
       if (input.value.toLowerCase().trim().length > 0) {
         const data = await dataFetching(
           `https://awesome-nft-app.herokuapp.com/search?q=${input.value
@@ -161,7 +163,7 @@ const initFilters = async () => {
       } else {
         await getProducts();
       }
-    }, 800);
+    }, 1000);
   });
 };
 
