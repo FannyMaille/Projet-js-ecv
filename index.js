@@ -1,17 +1,7 @@
 import { route, router } from "./routing.js";
-import createElement from "./createElement.js";
+import { dataFetching } from "./dataFetching.js";
+import { getProducts } from "./getProducts.js";
 
-/**
- * Fonctionnalités des favoris :
- *
- * 1. Créer un élément (a ou button) dans le dom avec data-favorite="SON_ID_UNIQUE" (SON_ID_UNIQUE est l'id du NFT renvoyé par l'api)
- * 2. Lui ajouter data-favorite-add-text="TEXTE_A_AFFICHER_POUR_AJOUTER" (exemple : "Ajouter aux favoris")
- * 3. Lui ajouter data-favorite-remove-text="TEXTE_A_AFFICHER_POUR_SUPPRIMER" (exemple : "Retirer des favoris")
- * 4. Si on veut ajouter du style css au bouton en fonction du statut, ajoutez les classes dynamiques :
- *  - data-favorite-added-classes="class1 class2" --> le bouton aura les classes si le nft est dans les fav
- *  - data-favorite-removed-classes="class1 class2" --> le bouton aura les classes si le nft n'est pas dans les fav
- *
- */
 const initFavorites = () => {
   const keyFavorites = "nftFavorites";
   let favorites = JSON.parse(localStorage.getItem(keyFavorites));
@@ -91,8 +81,68 @@ const initFavorites = () => {
   });
 };
 
+ const initFilters = async () => {
+
+    const filterDiv = document.getElementsByClassName('filters')[0];
+    const data = [];
+    for ( let i = 0; i < 6 ; i++ ) {
+        const pageData = await dataFetching(`https://awesome-nft-app.herokuapp.com/?page=${i}`)
+        data.push.apply(data, pageData);
+    };
+    let creatorNames = data.map((nft) => nft.creator.username );
+    creatorNames = creatorNames.filter((a, b) => creatorNames.indexOf(a) === b );
+    creatorNames = creatorNames.filter((e) => e.length !== 0);
+    const selector = filterDiv.querySelector('select');
+    selector.innerHTML = "";
+    selector.options.add(new Option( 'Creator', 'all creators', true, true ));
+    for ( const o of creatorNames ) {
+        selector.options.add(new Option( o ));
+    };
+    selector.addEventListener('change', async function() {
+        const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/search?q=${ selector.value }`);
+        const newList = data.filter(( item ) => item.creator.username.toLowerCase().includes( selector.value.toLowerCase()))
+        getProducts( newList );
+    })
+
+    const searchBar = filterDiv.querySelector('input');
+    const clearIcon = filterDiv.querySelector('i');
+    clearIcon.addEventListener("click", async () => {
+        searchBar.value = "";
+        await searchByKeyword();
+    });
+
+    const showAll = filterDiv.getElementsByClassName('select-all')[0];
+    showAll.addEventListener('click', async function() {
+        getProducts();
+    })
+    const showSales = filterDiv.getElementsByClassName('show-sales')[0];
+    showSales.addEventListener('click', async function() {
+        const newList = data.sort(( item1, item2 ) => item2.sales - item1.sales );
+        getProducts( newList );
+    })
+
+    const input = filterDiv.querySelector('input');
+    input.innerHTML = "";
+    input.addEventListener('keyup', async function () {
+        setTimeout(
+            async () => {
+                if ( input.value.toLowerCase().trim().length > 0 ) {
+                    const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/search?q=${ input.value.toLowerCase().trim() }`);
+                    await getProducts( data );
+                } else {
+                    await getProducts();
+                }
+            },
+            800
+        )
+        
+    })
+    
+}
+
 const initApp = () => {
-    initFavorites()
+    initFavorites();
+    initFilters();
 }
 
 document.addEventListener('datasLoaded', () => {
@@ -109,3 +159,14 @@ window.addEventListener("load", (e) => {
   window.addEventListener("hashchange", router);
   router(e);
 });
+
+async function searchByKeyword() {
+    const filterDiv = document.getElementsByClassName('filters')[0];
+    const input = filterDiv.querySelector('input')
+    if ( input.value.toLowerCase().trim().length > 0 ) {
+        const data = await dataFetching(`https://awesome-nft-app.herokuapp.com/search?q=${ input.value.toLowerCase().trim() }`);
+        getProducts( data );
+    } else {
+        getProducts();
+    }
+}

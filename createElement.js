@@ -1,28 +1,31 @@
 function createElement(tag, config, parent = null) {
   const {
-    text,
-    imgsrc,
-    myclass,
-    color,
     bgcolor,
     border,
-    myid,
-    myhref,
-    myonclick,
+    checked,
+    color,
     dataFavorite,
-    dataFavoriteText,
-    dataFavoriteRemoveText,
     dataFavoriteAddClass,
     dataFavoriteRemoveClass,
+    dataFavoriteRemoveText,
+    dataFavoriteText,
     height,
-    value,
-    name,
-    checked,
-    type,
     htmlFor,
-    min,
+    imgsrc,
     max,
+    min,
+    myclass,
+    myhref,
+    myid,
+    myonchange,
+    myonclick,
+    myonkeyup,
+    name,
+    placeholder,
     style, 
+    text,
+    type,
+    value,
     width,
   } = config || {};
   const root = document.querySelector('body');
@@ -127,6 +130,18 @@ function createElement(tag, config, parent = null) {
 
   if (htmlFor) {
     element.setAttribute('for', htmlFor)
+  }
+
+  if (myonkeyup) {
+    element.setAttribute("onkeyup", myonkeyup);
+  }
+
+  if (myonchange) {
+    element.onchange = myonchange;
+  }
+
+  if (placeholder) {
+    element.setAttribute("placeholder", placeholder);
   }
 
   if (!parent) {

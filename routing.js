@@ -1,4 +1,6 @@
 import createElement from "./createElement.js";
+import { dataFetchingSingle } from "./dataFetching.js";
+import { getProducts } from "./getProducts.js";
 //Routing
 
 // Both set of different routes and template generation functions
@@ -7,7 +9,6 @@ let templates = {};
 
 // Register a template (this is to mimic a template engine)
 function template(name, templateFunction) {
-  console.log("recall template builder");
   return (templates[name] = templateFunction);
 }
 
@@ -15,7 +16,6 @@ function template(name, templateFunction) {
 // when entering that path. A template can be a string (file name), or a function that
 // will directly create the DOM objects.
 function route(path, template) {
-  console.log("recall route");
   if (typeof template === "function") {
     return (routes[path] = template);
   } else if (typeof template === "string") {
@@ -46,7 +46,7 @@ template("home", () => {
   createElement(
     "a",
     {
-      text: "Créer son propre NFT",
+      text: "Create your own NFT",
       myhref: `#/nftcreator/`,
       myclass: "btn bntnft",
       color: "#627264",
@@ -87,158 +87,29 @@ template("home", () => {
   }
 
   (async () => {
-    async function dataFetching(url) {
-      const raw = await fetch(url);
-      const { assets } = await raw.json();
-      return assets;
-    }
+
+    //creates filters div 
+    createElement('div',{ myclass: 'filters'}, root );
+    const filterDiv = document.getElementsByClassName('filters')[0];
+
+    //adds filter buttons
+    createElement('button',{ myclass: 'btn green select-all', myonclick:"false", text:"Show all"}, filterDiv );
+    createElement('button',{ myclass: 'btn green show-sales', myonclick:"true", text:"Sort by Sales"}, filterDiv );
+
+    //adds creators selectors
+    createElement('div', { myclass: 'selectDiv' }, filterDiv );
+    const selectDiv = document.getElementsByClassName('selectDiv')[0];
+    createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
+    createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
+
+    //adds searchbar
+    createElement('div', { myclass: 'searchDiv' }, filterDiv );
+    const searchDiv = document.getElementsByClassName('searchDiv')[0];
+    createElement('input',{ myclass: 'searchbar', type: "text", placeholder: 'Type in anything'}, searchDiv );
+    createElement('i',{ myclass: 'icon icon-cross' }, searchDiv );
+
     //create my main div
-    const allentities = createElement("div", { myclass: "allentities" }, root);
-    for (let i = 1; i < 6; i++) {
-      try {
-        const assets = await dataFetching(
-          `https://awesome-nft-app.herokuapp.com/?page=${i}`
-        );
-        assets.map(({ name, image_url, id, creator, collection, sales }) => {
-          //create Card
-          const card = createElement("div", { myclass: "card" }, allentities);
-
-          //create div header
-          const cardHeader = createElement(
-            "div",
-            { myclass: "card-header" },
-            card
-          );
-
-          //Create title and heart
-          const titlenft = createElement(
-            "div",
-            { myclass: "titlenft" },
-            cardHeader
-          );
-          if (name) {
-            createElement(
-              "h2",
-              { text: name, color: "#627264", myclass: "namenft" },
-              titlenft
-            );
-          } else {
-            createElement(
-              "h2",
-              {
-                text: "No Title Available",
-                color: "#627264",
-                myclass: "namenft",
-              },
-              titlenft
-            );
-          }
-
-          createElement(
-            "a",
-            {
-              myclass: "favorite",
-              dataFavorite: id,
-              dataFavoriteAddClass: "favoriteadd",
-              dataFavoriteRemoveClass: "favoriteremove",
-            },
-            titlenft
-          );
-
-          //create p username
-          if (creator.username) {
-            createElement(
-              "p",
-              {
-                text: `Created by ${
-                  creator.username
-                } <br> On the ${collection.created_at.slice(0, 10)}`,
-                myclass: "card-subtitle text-gray",
-              },
-              cardHeader
-            );
-          } else {
-            createElement(
-              "p",
-              {
-                text: `Created by unknown Creator <br> On the ${collection.created_at.slice(
-                  0,
-                  10
-                )}`,
-                myclass: "card-subtitle text-gray",
-              },
-              cardHeader
-            );
-          }
-
-          //create p sales
-          if (sales) {
-            createElement(
-              "p",
-              {
-                text: `${sales} sales`,
-                color: "#627264",
-                myclass: "card-subtitle",
-              },
-              cardHeader
-            );
-          } else {
-            createElement(
-              "p",
-              { text: `0 sales`, color: "#627264", myclass: "card-subtitle" },
-              cardHeader
-            );
-          }
-
-          //create image
-          const cardImage = createElement(
-            "DIV",
-            { myclass: "card-image" },
-            card
-          );
-          if (image_url) {
-            createElement(
-              "img",
-              { imgsrc: image_url, myclass: "img-responsive image" },
-              cardImage
-            );
-          } else {
-            createElement(
-              "img",
-              {
-                imgsrc: "./assets/noImage.png",
-                myclass: "img-responsive image",
-              },
-              cardImage
-            );
-          }
-
-          //create btn
-          const cardFooter = createElement(
-            "div",
-            { myclass: "card-footer" },
-            cardHeader
-          );
-          createElement(
-            "a",
-            {
-              text: "Voir la fiche détails",
-              myhref: `#/product/${id}`,
-              myclass: "btn",
-              color: "#627264",
-              bgcolor: "#A1CDA8",
-              border: "#A1CDA8",
-            },
-            cardFooter
-          );
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    const datasLoadedEvent = new Event("datasLoaded");
-    document.dispatchEvent(datasLoadedEvent);
-
+    getProducts();
     skeleton.remove();
   })();
 });
@@ -249,7 +120,7 @@ template("product", () => {
     createElement(
       "button",
       {
-        text: "Retour",
+        text: "Back",
         myonclick: `window.location.href='/'`,
         myclass: "btn ml-2 mt-2",
         color: "#627264",
@@ -259,11 +130,6 @@ template("product", () => {
       root
     );
     const id_nft = window.location.hash.slice(10);
-
-    async function dataFetchingSingle(url) {
-      const raw = await fetch(url);
-      return await raw.json();
-    }
 
     //création des divs
     createElement(
@@ -302,7 +168,6 @@ template("product", () => {
       const asset = await dataFetchingSingle(
         `https://awesome-nft-app.herokuapp.com/nft/${id_nft}`
       );
-      console.log(asset);
       const { name, description, image_url, collection, creator } = asset;
 
       const divProductDetail = document.getElementById("product_detail");
@@ -313,7 +178,7 @@ template("product", () => {
 
       createElement(
         "h1",
-        { text: "Fiche produit", color: "", myclass: "text-center" },
+        { text: "Product sheet", color: "", myclass: "text-center" },
         divProductEssential
       );
       createElement(
@@ -434,7 +299,7 @@ template("product", () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   })();
 });
@@ -445,7 +310,7 @@ template("nftcreator", () => {
     createElement(
       "button",
       {
-        text: "Retour",
+        text: "Back",
         myonclick: `window.location.href='/'`,
         myclass: "btn ml-2 mt-2",
         color: "#627264",
@@ -746,7 +611,6 @@ template("nftcreator", () => {
           window.alert("Creator name and NFT name are required !");
         } else {
           let existingNftId = nfts.findIndex((n) => n.name == nft.name);
-          console.log(existingNftId, nfts, nft);
           if (existingNftId == -1) {
             nfts.push(nft);
           } else {
@@ -856,9 +720,7 @@ function router(evt) {
   const root = document.querySelector("body");
   root.innerHTML = "";
   try {
-    // console.log(window.location.hash.slice(10));
     let url = window.location.hash.slice(1) || "/";
-    console.log({ url, routes, templates });
     const resolvedRoute = resolveRoute(
       url.includes("/product/") ? "/product/" : url
     );
