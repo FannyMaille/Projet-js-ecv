@@ -38,10 +38,13 @@ template("home", () => {
     root
   );
 
-  const divBtn = createElement("div", {
-    myclass: "title",
-  },
-  root);
+  const divBtn = createElement(
+    "div",
+    {
+      myclass: "title",
+    },
+    root
+  );
 
   createElement(
     "a",
@@ -87,29 +90,52 @@ template("home", () => {
   }
 
   (async () => {
-
-    //creates filters div 
-    createElement('div',{ myclass: 'filters'}, root );
-    const filterDiv = document.getElementsByClassName('filters')[0];
+    //creates filters div
+    createElement(
+      "div",
+      { myclass: "filters", style: { display: "none" } },
+      root
+    );
+    const filterDiv = document.getElementsByClassName("filters")[0];
 
     //adds filter buttons
-    createElement('button',{ myclass: 'btn green select-all', myonclick:"false", text:"Show all"}, filterDiv );
-    createElement('button',{ myclass: 'btn green show-sales', myonclick:"true", text:"Sort by Sales"}, filterDiv );
+    createElement(
+      "button",
+      { myclass: "btn green select-all", myonclick: "false", text: "Show all" },
+      filterDiv
+    );
+    createElement(
+      "button",
+      {
+        myclass: "btn green show-sales",
+        myonclick: "true",
+        text: "Sort by Sales",
+      },
+      filterDiv
+    );
 
     //adds creators selectors
-    createElement('div', { myclass: 'selectDiv' }, filterDiv );
-    const selectDiv = document.getElementsByClassName('selectDiv')[0];
-    createElement('label',{ myclass: 'title', id:"selName" }, selectDiv );
-    createElement('select',{ myclass: 'select form-select', id:"creatorName" }, selectDiv );
+    createElement("div", { myclass: "selectDiv" }, filterDiv);
+    const selectDiv = document.getElementsByClassName("selectDiv")[0];
+    createElement("label", { myclass: "title", id: "selName" }, selectDiv);
+    createElement(
+      "select",
+      { myclass: "select form-select", id: "creatorName" },
+      selectDiv
+    );
 
     //adds searchbar
-    createElement('div', { myclass: 'searchDiv' }, filterDiv );
-    const searchDiv = document.getElementsByClassName('searchDiv')[0];
-    createElement('input',{ myclass: 'searchbar', type: "text", placeholder: 'Type in anything'}, searchDiv );
-    createElement('i',{ myclass: 'icon icon-cross' }, searchDiv );
+    createElement("div", { myclass: "searchDiv" }, filterDiv);
+    const searchDiv = document.getElementsByClassName("searchDiv")[0];
+    createElement(
+      "input",
+      { myclass: "searchbar", type: "text", placeholder: "Type in anything" },
+      searchDiv
+    );
+    createElement("i", { myclass: "icon icon-cross" }, searchDiv);
 
     //create my main div
-    getProducts();
+    await getProducts();
     skeleton.remove();
   })();
 });
@@ -395,10 +421,14 @@ template("nftcreator", () => {
 
         const nftButton = createElement(
           "button",
-          { type: "button", text: "Load", myclass: "btn ml-2 mt-2",
-          color: "#627264",
-          bgcolor: "#A1CDA8",
-          border: "#A1CDA8",},
+          {
+            type: "button",
+            text: "Load",
+            myclass: "btn ml-2 mt-2",
+            color: "#627264",
+            bgcolor: "#A1CDA8",
+            border: "#A1CDA8",
+          },
           divEditor
         );
 
@@ -494,7 +524,12 @@ template("nftcreator", () => {
       );
       const colorInput = createElement(
         "input",
-        { type: "color", myid: "color", myclass: 'col-12', value: currentColor },
+        {
+          type: "color",
+          myid: "color",
+          myclass: "col-12",
+          value: currentColor,
+        },
         blocColor
       );
 
@@ -572,16 +607,27 @@ template("nftcreator", () => {
 
       const btnBloc = createElement(
         "div",
-        { style: { display: "flex", gap: "4px", alignItems: "center", justifyContent: 'space-between' } },
+        {
+          style: {
+            display: "flex",
+            gap: "4px",
+            alignItems: "center",
+            justifyContent: "space-between",
+          },
+        },
         divEditor
       );
 
       const downloadButton = createElement(
         "button",
-        { type: "button", text: "Download", myclass: "btn ml-2 mt-2 col-6",
-        color: "#627264",
-        bgcolor: "#A1CDA8",
-        border: "#A1CDA8",},
+        {
+          type: "button",
+          text: "Download",
+          myclass: "btn ml-2 mt-2 col-6",
+          color: "#627264",
+          bgcolor: "#A1CDA8",
+          border: "#A1CDA8",
+        },
         btnBloc
       );
 
@@ -599,10 +645,14 @@ template("nftcreator", () => {
 
       const saveButton = createElement(
         "button",
-        { type: "button", text: "Save", myclass: "btn ml-2 mt-2 col-6",
-        color: "#627264",
-        bgcolor: "#A1CDA8",
-        border: "#A1CDA8", },
+        {
+          type: "button",
+          text: "Save",
+          myclass: "btn ml-2 mt-2 col-6",
+          color: "#627264",
+          bgcolor: "#A1CDA8",
+          border: "#A1CDA8",
+        },
         btnBloc
       );
 
@@ -629,7 +679,7 @@ template("nftcreator", () => {
           id: "myCanvas",
           width: nftSize,
           height: nftSize,
-          style: { border: "solid 1px #000000", margin: 'auto',  },
+          style: { border: "solid 1px #000000", margin: "auto" },
         },
         container
       );

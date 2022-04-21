@@ -84,6 +84,7 @@ const initFavorites = () => {
  const initFilters = async () => {
 
     const filterDiv = document.getElementsByClassName('filters')[0];
+    filterDiv.style.display = "flex";
     const data = [];
     for ( let i = 0; i < 6 ; i++ ) {
         const pageData = await dataFetching(`https://awesome-nft-app.herokuapp.com/?page=${i}`)
