@@ -156,7 +156,6 @@ const initFilters = async () => {
       if (input.value.toLowerCase().trim().length > 0) {
         const data = await dataFetching(
           `https://awesome-nft-app.herokuapp.com/search?q=${input.value
-            .toLowerCase()
             .trim()}`
         );
         await getProducts(data);
