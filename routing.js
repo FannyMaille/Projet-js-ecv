@@ -46,7 +46,7 @@ template("home", () => {
   createElement(
     "a",
     {
-      text: "Créer son propre NFT",
+      text: "Create your own NFT",
       myhref: `#/nftcreator/`,
       myclass: "btn bntnft",
       color: "#627264",
@@ -120,7 +120,7 @@ template("product", () => {
     createElement(
       "button",
       {
-        text: "Retour",
+        text: "Back",
         myonclick: `window.location.href='/'`,
         myclass: "btn ml-2 mt-2",
         color: "#627264",
@@ -178,7 +178,7 @@ template("product", () => {
 
       createElement(
         "h1",
-        { text: "Fiche produit", color: "", myclass: "text-center" },
+        { text: "Product sheet", color: "", myclass: "text-center" },
         divProductEssential
       );
       createElement(
@@ -310,7 +310,7 @@ template("nftcreator", () => {
     createElement(
       "button",
       {
-        text: "Retour",
+        text: "Back",
         myonclick: `window.location.href='/'`,
         myclass: "btn ml-2 mt-2",
         color: "#627264",
@@ -386,7 +386,10 @@ template("nftcreator", () => {
 
         const nftButton = createElement(
           "button",
-          { type: "button", text: "Load my NFT", myclass: "btn mb-2" },
+          { type: "button", text: "Load my NFT", myclass: "btn mb-2",
+          color: "#627264",
+          bgcolor: "#A1CDA8",
+          border: "#A1CDA8" },
           divEditor
         );
 
@@ -560,7 +563,9 @@ template("nftcreator", () => {
 
       const downloadButton = createElement(
         "button",
-        { type: "button", text: "Download my NFT", myclass: "btn" },
+        { type: "button", text: "Download my NFT", myclass: "btn", color: "#627264",
+        bgcolor: "#A1CDA8",
+        border: "#A1CDA8" },
         divEditor
       );
 
@@ -578,7 +583,9 @@ template("nftcreator", () => {
 
       const saveButton = createElement(
         "button",
-        { type: "button", text: "Save my NFT", myclass: "btn" },
+        { type: "button", text: "Save my NFT", myclass: "btn", color: "#627264",
+        bgcolor: "#A1CDA8",
+        border: "#A1CDA8" },
         divEditor
       );
 

@@ -148,7 +148,7 @@ export async function getProducts( data = false ) {
             createElement(
                 "a",
                 {
-                text: "Voir la fiche détails",
+                text: "See details",
                 myhref: `#/product/${id}`,
                 myclass: "btn",
                 color: "#627264",
