@@ -230,6 +230,27 @@ h2 {
 	height: 240px;
 }
 
+.card-subtitle-skeleton {
+	width: 300px;
+	background-color: rgb(186, 186, 186);
+	height: 50px;
+	margin-top: 5px;
+}
+
+.card-sale-skeleton {
+	width: 100px;
+	height: 35px;
+	background-color: rgb(186, 186, 186);
+	margin-top: 20px;
+}
+
+.card-button-skeleton {
+	width: 150px;
+	background-color: rgb(186, 186, 186);
+	height: 40px;
+	margin: 10px auto 0 30px;
+}
+
 .blink_me {
 	animation: blinker 1.5s linear infinite;
 }
@@ -250,4 +271,34 @@ h2 {
 
 .bntnft{
   text-align: center;
+}
+
+.card-product-skeleton {
+	background-color: #d2d2d2;
+	height: 900px;
+	width: 600px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.title-product-skeleton {
+	width: 300px;
+	height: 70px;
+	background-color: rgb(186, 186, 186);
+}
+
+.title-nft-skeleton {
+	margin-top: 30px;
+	width: 450px;
+	height: 70px;
+	background-color: rgb(186, 186, 186);
+}
+
+.img-skeleton {
+	margin-top: 50px;
+	width: 400px;
+	height: 500px;
+	background-color: rgb(143, 143, 143);
 }
