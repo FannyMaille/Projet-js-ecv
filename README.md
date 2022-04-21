@@ -7,5 +7,8 @@
 - Benjamin Alerte - benjamin.alerte@mail-ecv.fr
 
 ## Fonctionnalités
+Création d'un NFT en pixel art (via canvas) + save dans le localstorage
 
 ## Getting started
+Faire un npm install
+Lancer le projet avec Live Server
