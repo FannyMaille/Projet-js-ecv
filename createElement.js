@@ -27,6 +27,7 @@ function createElement(tag, config, parent = null) {
     type,
     value,
     width,
+    customatributes
   } = config || {};
   const root = document.querySelector('body');
   const element = document.createElement(tag);
@@ -121,6 +122,12 @@ function createElement(tag, config, parent = null) {
   if (style) {
     Object.keys(style).forEach((prop) => {
       element.style[prop] = style[prop]
+    })
+  }
+
+  if (customatributes) {
+    Object.keys(customatributes).forEach((prop) => {
+      element.setAttribute(prop, customatributes[prop]);
     })
   }
 

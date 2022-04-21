@@ -8,9 +8,7 @@ export async function getProducts( data = false ) {
         allentities = createElement("div", { myclass: "allentities" }, root);
     }
 
-    while( allentities.firstChild ){
-        allentities.removeChild(allentities.firstChild);
-    }
+    allentities.innerHTML = "";
 
     let i;
     let maxI = 6;
@@ -27,7 +25,7 @@ export async function getProducts( data = false ) {
 
             assets.map(({ name, image_url, id, creator, collection, sales }) => {
             //create Card
-            const card = createElement("div", { myclass: "card" }, allentities);
+            const card = createElement("div", { myclass: "card", customatributes:{ 'data-sales': sales ?? 0} }, allentities);
     
             //create div header
             const cardHeader = createElement(
